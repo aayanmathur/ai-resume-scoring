@@ -1,50 +1,69 @@
-# 🧪 R&D Task Management - Resume Builder LLM App
+---
 
-This folder contains all the core Research & Development (R&D) tasks and documentation related to building and scaling the `resume_builder_llm_app` project.
+## 🧠 R&D Goals
+
+- Break the project into logical, modular units
+- Assign owners for fast, parallel development
+- Track status and progress transparently
+- Ensure integration across all LLM + parsing + templating components
 
 ---
 
-## 🔍 Purpose
+## 🛠 Tech Stack Reference
 
-To clearly define, assign, and track team responsibilities for various core modules in the project — from resume parsing to feedback generation — using a modular and LLM-powered architecture.
-
----
-
-## 🧩 Core Task Assignments
-
-| Task Title                        | Assigned To                     | Description                                                                                     |
-|----------------------------------|----------------------------------|-------------------------------------------------------------------------------------------------|
-| **Resume Upload & Parsing**      | Arun Raj, Gomathi               | Build Streamlit uploader, extract info from PDF/DOCX using OCR, PyMuPDF, docx, etc.            |
-| **LinkedIn Profile Parser**      | Vinothini, Nilofer Mubeen       | Extract profile data from URL or PDF using LLMs and scraping tools                              |
-| **AI Resume Template Agent**     | Amit Arjun Verma                | Use prompt engineering to generate LaTeX/DOCX templates based on user role                     |
-| **LLM Prompt Builder Module**    | _To be assigned_                | Create a reusable prompt builder for all LLM calls (resume generation, feedback, etc.)         |
-| **Feedback Generator**           | Nehlath Harmain, Subhash        | Compare resume with job description and suggest improvements using GPT                         |
-
-> Full task board maintained here:  
-> 🔗 [R&D Task Sheet (Google Sheets)](https://docs.google.com/spreadsheets/d/1KY6Vx0TY-qJGzmI6qb9OsHmCOVIDJMtFJiZTkRJzWyMM/edit)
+| Module | Suggested Tools / Tech |
+|--------|-------------------------|
+| Resume Parsing | `pdfplumber`, `PyMuPDF`, `pdf2docx`, `re`, `tiktoken` |
+| LinkedIn Parser | `Selenium`, `BeautifulSoup`, `OpenAI GPT`, `json` |
+| Prompt Builder | `langchain`, `yaml`, `jinja2`, `OpenAI API`, `promptlayer` |
+| Template Agent | `python-docx`, `jinja2`, `LaTeX`, `CSS`, `WeasyPrint` |
+| Feedback Gen | `OpenAI`, `cosine_similarity`, `embeddings`, `GPT-4o` |
 
 ---
 
-## 🛠️ Tech Stack Per Module
+## 🧭 Team Workflow
 
-| Module                 | Tools / Libraries Used                                                                 |
-|------------------------|----------------------------------------------------------------------------------------|
-| Resume Parsing         | `PyMuPDF`, `pdfplumber`, `python-docx`, `re`, `json`                                  |
-| LinkedIn Parser        | `BeautifulSoup`, `Selenium` *(optional)*, GPT-4, LangChain                            |
-| Prompt Builder         | `yaml`, `jinja2`, `langchain`, `openai`                                               |
-| Template Agent         | `jinja2`, `python-docx`, `LaTeX`, `jinja + CSS`                                       |
-| Feedback Generator     | `openai`, `sentence-transformers`, `cosine_similarity`, `langchain.embeddings_utils` |
+1. Each team member works on their assigned module in a dedicated branch.
+2. Code should be modular and reusable inside the `src/` directory.
+3. Push updates regularly and raise Pull Requests.
+4. Communicate blockers/updates on Slack or internal group.
+5. Weekly sync call to review progress.
 
 ---
 
-## 🧠 Team Workflow
+## ✅ Task Status Tracker (from Google Sheet)
 
-Each R&D member should:
-1. Work on their assigned module in a separate branch
-2. Push updates and raise PRs with testable code
-3. Follow code documentation and naming conventions
-4. Sync every week with updates/status
+| Task | Status |
+|------|--------|
+| Resume Upload & Parsing | Not started |
+| LinkedIn Profile Parsing | Not started |
+| Resume Template Agent | Not started |
+| Prompt Builder | Not started |
+| Feedback Generator | Not started |
+
+_Update live status here once each task progresses._
 
 ---
 
-## 📂 Folder Content
+## 🔗 Task Sheet Link
+
+Live team sheet with owner, status, and priority:  
+👉 [Open in Google Sheets](https://docs.google.com/spreadsheets/d/1KY6Vx0TY-qJGzmI6qb90sHmC0VDJMtfJizTKjRzWyMM/edit?usp=sharing)
+
+---
+
+## 🤝 Contribution Guidelines
+
+- Stick to assigned tasks unless re-discussed.
+- Maintain clean, readable, and testable code.
+- Create isolated modules that follow the project’s folder structure.
+- Add minimal unit tests inside the `tests/` folder where applicable.
+
+---
+
+## 📣 Notes
+
+- Ping Subhash if GitHub or LLM integration help is needed.
+- Suggestions and improvements to R&D flow are welcome!
+
+Let’s build a resume builder that stands out 💪🚀
