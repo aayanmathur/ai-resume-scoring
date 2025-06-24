@@ -1,3 +1,23 @@
+# 🧪 R&D Task Dashboard – Resume Builder LLM App
+
+Welcome to the **Research & Development** coordination space for the `resume_builder_llm_app`. This document tracks all major technical modules, task ownership, progress, and R&D planning involved in building a robust, LLM-powered resume generation system.
+
+---
+
+## 📌 Core Modules & Assignments
+
+| 🔧 Task Title | 👤 Assigned To | 📄 Description |
+|--------------|----------------|----------------|
+| **Resume Upload & Parsing** | Arun Raj, Gomathi | Build resume upload component. Parse PDFs via pdfplumber or OCR and extract key fields (email, phone, links, etc.). |
+| **LinkedIn Profile URL Parser / Description Extractor** | Vinothini, Nilofer Mubeen | Fetch public LinkedIn profile data from a URL or PDF export and extract fields like Name, Summary, Skills, Education, Experience using LLM/web scraping. |
+| **AI Resume Template Agent** | Amit Arjun Verma | Build a prompt-based agent that dynamically generates LaTeX or CSS code for resume templates based on user preferences and style requirements. |
+| **LLM Prompt Builder Module** | _(Not yet assigned)_ | Build a centralized engine to generate dynamic prompts for resume generation, parsing, feedback, and formatting (LaTeX/CSS). |
+| **Feedback Generator** | Nehlath Harmain, Subhash | Compare resume content with JD, identify gaps or mismatches, and generate GPT-powered constructive feedback without exaggeration. |
+
+---
+
+## 📂 Folder Contents
+
 ---
 
 ## 🧠 R&D Goals
