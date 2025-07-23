@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manual Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4 py-10">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+    <div class="text-center mb-6">
+      <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Educational</span> Details
+      </h1>
+    </div>
+
+    <!-- Dynamic Container -->
+    
+
+<form id="education-form">
+  <div id="education-container">
+    <!-- First Education Block with heading -->
+    <div class="education-block fade-in mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 dark:text-white mb-4">Detail 1</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
+          <input type="text" name="course" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="B.E. Computer Science" required>
+        </div>
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Institution</label>
+          <input type="text" name="institution" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Chennai" required>
+        </div>
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
+          <input type="number" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="2015" required>
+        </div>
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Percentage or CGPA</label>
+          <input type="number" name="marks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="85" required>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add More + Next remain same -->
+  <div class="flex justify-center">
+    <button type="button" onclick="addEducationBlock()" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 transition-all duration-300 shadow-md">
+      + Add More Educational Details
+    </button>
+  </div>
+
+  
+</form>
+<div class="flex justify-between items-center max-w-3xl mx-auto mt-6 px-4">
+  <!-- Previous Button -->
+<a href="{{ url_for('manual_resume') }}"
+   class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center flex items-center justify-center">
+  <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+  </svg>
+  Back
+</a>
+
+<!-- Next Button to experience.html -->
+<a href="{{ url_for('experience') }}"
+   class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center flex items-center justify-center">
+  Next
+  <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+  </svg>
+</a>
+</div>
+
+<!-- JavaScript to add Detail N -->
+<script>
+  function addEducationBlock() {
+    const container = document.getElementById("education-container");
+    const blocks = container.getElementsByClassName("education-block");
+    const count = blocks.length + 1;
+
+    const lastBlock = blocks[blocks.length - 1];
+    const newBlock = lastBlock.cloneNode(true);
+
+    // Clear inputs
+    const inputs = newBlock.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+
+    // Update heading
+    const heading = newBlock.querySelector("h2");
+    if (heading) {
+      heading.textContent = `Detail ${count}`;
+    }
+
+    // Add fade-in
+    newBlock.classList.add("fade-in");
+
+    container.appendChild(newBlock);
+  }
+</script>
+
+</body>
+</html>

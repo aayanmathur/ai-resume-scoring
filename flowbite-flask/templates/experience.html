@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Work Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4 py-10 fade-in">
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+  
+  <!-- Header -->
+  <div class="text-center mb-6">
+    <h1 class="mb-2 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+      <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Work</span> Experience
+    </h1>
+    <p class="text-gray-600 dark:text-gray-300 mt-2">
+      Please add your experiences starting from your most recent job to older ones (in descending order).
+    </p>
+  </div>
+
+  <!-- Experience Container -->
+  <form id="experience-form">
+    <div id="experience-container" class="space-y-10">
+      <!-- Experience Block -->
+      <div class="experience-block border rounded-xl p-6 bg-gray-50 dark:bg-gray-800">
+        <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 mb-4">Detail 1</h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+            <input type="text" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Software Engineer" required>
+          </div>
+          <div>
+            <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
+            <input type="text" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Company Name" required>
+          </div>
+
+          <div class="md:col-span-2">
+            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsibilities</label>
+            <textarea id="role" rows="10"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Responsibilities here..."></textarea>
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From - Month</label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <option selected disabled>Choose a month</option>
+              <option>January</option><option>February</option><option>March</option>
+              <option>April</option><option>May</option><option>June</option>
+              <option>July</option><option>August</option><option>September</option>
+              <option>October</option><option>November</option><option>December</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From - Year</label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <option selected disabled>Choose a year</option>
+              {% for year in range(2025, 1989, -1) %}
+                <option>{{ year }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To - Month</label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <option selected disabled>Choose a month</option>
+              <option>January</option><option>February</option><option>March</option>
+              <option>April</option><option>May</option><option>June</option>
+              <option>July</option><option>August</option><option>September</option>
+              <option>October</option><option>November</option><option>December</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To - Year</label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <option selected disabled>Choose a year</option>
+              {% for year in range(2025, 1989, -1) %}
+                <option>{{ year }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="inline-flex items-center mt-2 text-sm text-gray-700 dark:text-gray-300">
+              <input type="checkbox" name="currently_working" class="mr-2">
+              I am currently working here
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add More Button -->
+    <div class="flex justify-center mt-6">
+      <button type="button" id="add-more" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 transition-all duration-300 shadow-md">
+        + Add More Experience
+      </button>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-10">
+      <a href="{{ url_for('education_details') }}"
+         class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center flex items-center justify-center">
+        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+        </svg>
+        Back
+      </a>
+
+      <a href="{{ url_for('projects') }}"
+         class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center flex items-center justify-center">
+        Skip (For Freshers)
+        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </a>
+    </div>
+  </form>
+</div>
+
+<!-- Script for Add More -->
+<script>
+let count = 1;
+document.getElementById('add-more').addEventListener('click', () => {
+  count++;
+  const container = document.getElementById('experience-container');
+  const newBlock = container.firstElementChild.cloneNode(true);
+  newBlock.querySelector('h2').textContent = `Detail ${count}`;
+  newBlock.querySelectorAll('input, textarea').forEach(input => {
+    if (input.type === 'checkbox') {
+      input.checked = false;
+    } else {
+      input.value = '';
+    }
+  });
+  newBlock.classList.add("fade-in");
+  container.appendChild(newBlock);
+});
+</script>
+</body>
+</html>

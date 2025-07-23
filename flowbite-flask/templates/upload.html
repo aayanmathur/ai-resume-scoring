@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary-25': '#f5feff',
+            'primary-50': '#ecfeff',
+            'primary-100': '#cffafe',
+            'primary-200': '#a5f3fc',
+            'primary-400': '#ffe6f0',
+            'primary-500': '#fce7f3',
+            'primary-600': '#fbcfe8',
+            'white': '#ffffff',
+            'maroon': '#800000'
+          },
+          animation: {
+            fadeInUp: 'fadeInUp 0.6s ease-out'
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gradient-to-br from-primary-50 via-primary-50 to-primary-200 min-h-screen flex items-center justify-center">
+
+  <!-- Maroon border container -->
+  <div class="w-[95%] h-[95vh] border-2 border-dashed border-maroon rounded-3xl p-6 flex items-center justify-between">
+
+    <!-- Left Side Image -->
+    <div class="w-1/2 flex justify-center items-center transition-transform duration-500 hover:scale-105">
+      <img src="{{ url_for('static', filename='images/upload_page.png') }}"
+           alt="Upload illustration"
+           class="w-auto h-auto max-h-[400px]">
+    </div>
+
+    <!-- Right Side Content -->
+    <div class="w-1/2 flex flex-col justify-center items-center space-y-8 animate-fadeInUp">
+
+      <!-- Heading -->
+      <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl text-center">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Enhance</span> your CV
+      </h1>
+      <p class="text-lg font-medium text-gray-600 dark:text-gray-300 text-center">
+        Already have a resume? Upload it and get a polished, ATS-ready version instantly
+      </p>
+
+      <!-- Upload Box -->
+      <form id="upload-form" class="w-full max-w-md transition-all duration-500 hover:shadow-xl hover:scale-[1.02]">
+        <label for="file-upload" class="flex flex-col items-center justify-center w-full h-60 border-2 border-dashed border-red-700 rounded-lg cursor-pointer bg-white hover:bg-gray-100 transition-all duration-300">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-600 dark:text-gray-800" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 
+                   5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5
+                   a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500">
+              <span class="font-semibold">Click to upload</span> or drag and drop
+            </p>
+            <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+          </div>
+          <input id="file-upload" name="file" type="file" class="hidden" />
+        </label>
+        <p id="file-name" class="text-sm mt-2 text-gray-800 text-center font-medium"></p>
+      </form>
+
+      <!-- Next Button -->
+      <div id="next-button-wrapper" class="mt-4 hidden flex justify-center">
+        <a href="/next-page-url"
+          class="flex items-center justify-center text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:scale-105 focus:scale-105 transition-transform duration-300 ease-in-out focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-semibold rounded-lg text-base px-6 py-3 text-center shadow-lg">
+          Next
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('file-upload');
+    const fileNameDisplay = document.getElementById('file-name');
+    const nextButtonWrapper = document.getElementById('next-button-wrapper');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        fileNameDisplay.textContent = `"${file.name}" uploaded`;
+        nextButtonWrapper.classList.remove('hidden');
+      } else {
+        fileNameDisplay.textContent = "";
+        nextButtonWrapper.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -5,7 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resume Builder</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-delay-1 { animation: fadeIn 0.8s ease forwards; animation-delay: 0.5s; opacity: 0; }
+    .fade-in-delay-2 { animation: fadeIn 0.8s ease forwards; animation-delay: 1s; opacity: 0; }
+
+    .bounce-arrow {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
 </head>
+
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center py-10">
 
   <div class="w-full max-w-7xl px-6">
@@ -13,16 +30,23 @@
 
       <!-- LEFT COLUMN -->
       <div>
-        <h1 class="text-4xl font-extrabold text-gray-900">Build your resume with ease</h1>
+        <h1 class="text-5xl font-extrabold text-gray-900">Build your resume with ease</h1>
         <p class="mt-4 text-lg text-gray-600">
           Either upload your existing resume for analysis or manually fill out your details to generate a professional, ATS-friendly resume using AI assistance.
         </p>
 
+              
         <!-- Choose an Option Box -->
-        <div class="mt-8 bg-white p-6 rounded-lg shadow-md text-center space-y-4 w-full max-w-md">
+        <div class="mt-6 bg-white p-6 rounded-lg shadow-md text-center space-y-6 w-full max-w-md">
           <h3 class="text-lg font-semibold">Choose an Option</h3>
-          <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Upload Resume</button>
-          <button class="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300">Fill Resume Details Manually</button>
+
+          <a href="{{ url_for('upload_resume') }}">
+            <button type="button" class="text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-20 py-2.5 text-center me-2 mb-2">Upload Resume</button>
+          </a>
+
+          <a href="{{ url_for('manual_resume') }}">
+            <button class="text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center me-2 mb-2">Fill Resume Details Manually</button>
+          </a>
         </div>
       </div>
 
@@ -30,13 +54,13 @@
       <div class="flex flex-col items-center">
         <h2 class="text-2xl font-bold mb-6 text-gray-800">Sample Templates</h2>
         <div class="flex gap-8">
-          <!-- Template 1 -->
-          <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition w-64 h-[380px]">
+          <!-- Template 1 with fade-in -->
+          <div class="fade-in-delay-1 bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition w-64 h-[380px]">
             <img src="{{ url_for('static', filename='images/template1.png') }}" class="rounded-md w-full h-full object-contain" alt="Template 1">
           </div>
 
-          <!-- Template 3 -->
-          <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition w-64 h-[380px]">
+          <!-- Template 3 with fade-in -->
+          <div class="fade-in-delay-2 bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition w-64 h-[380px]">
             <img src="{{ url_for('static', filename='images/template3.png') }}" class="rounded-md w-full h-full object-contain" alt="Template 3">
           </div>
         </div>

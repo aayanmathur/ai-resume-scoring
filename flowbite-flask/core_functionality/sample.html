@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Template</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      background-color: white;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="text-gray-900 text-[17px] leading-[1.6]">
+
+  <!-- Header -->
+  <header class="text-center mb-8">
+    <div class="inline-block bg-yellow-300 px-10 py-4 text-[32px] font-extrabold uppercase tracking-wide">
+      RAHUL MALIK
+    </div>
+    <div class="mt-4 text-[20px] font-medium tracking-wide">
+      NLP Data Scientist
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="flex flex-row mt-4">
+
+    <!-- Left Column -->
+    <div class="w-[35%] pr-10 text-right space-y-10">
+
+      <!-- Contact -->
+      <section>
+        <h2 class="text-lg font-bold uppercase mb-1">Contact</h2>
+        <p>Brooklyn, NY</p>
+        <p>(123) 456-7890</p>
+        <p>rahul@beamjobs.com</p>
+        <p class="text-blue-600 underline">LinkedIn</p>
+        <p class="text-blue-600 underline">GitHub</p>
+      </section>
+
+      <!-- Education -->
+      <section>
+        <h2 class="text-lg font-bold uppercase mb-1">Education</h2>
+        <div class="mb-4">
+          <p class="font-semibold">PhD, NLP</p>
+          <p>University of Maryland</p>
+          <p class="text-sm text-gray-600">Sep 2010 – Apr 2016</p>
+        </div>
+        <div>
+          <p class="font-semibold">B.S., Statistics</p>
+          <p>Princeton University</p>
+          <p class="text-sm text-gray-600">Sep 2006 – Apr 2010</p>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <h2 class="text-lg font-bold uppercase mb-1">Skills</h2>
+        <ul class="list-none space-y-1">
+          <li>Python (NumPy, Pandas, Keras)</li>
+          <li>SQL (MySQL, Postgres)</li>
+          <li>Git</li>
+          <li>Time Series Forecasting</li>
+          <li>Productizing Models</li>
+          <li>Recommendation Engines</li>
+          <li>Customer Segmentation</li>
+          <li>AWS</li>
+          <li>NLP</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- Vertical Divider -->
+    <div class="w-px bg-gray-300"></div>
+
+    <!-- Right Column -->
+    <div class="w-[65%] pl-10 space-y-10">
+
+      <!-- Work Experience -->
+      <section>
+        <h2 class="text-2xl font-bold uppercase">Work Experience</h2>
+
+        <!-- Job 1 -->
+        <div class="mt-2">
+          <h3 class="font-semibold text-xl">NLP Data Scientist</h3>
+          <p class="text-sm text-gray-600">Amazon • May 2018 – Present • New York, NY</p>
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li>Deconstructed item descriptions to improve conversion rate by 3%.</li>
+            <li>Built automated system to detect fake reviews, reducing them by 9%.</li>
+            <li>Analyzed vendor response quality and reduced return rates by 7%.</li>
+            <li>Mentored 2 junior data scientists.</li>
+          </ul>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="mt-4">
+          <h3 class="font-semibold text-xl">Data Scientist</h3>
+          <p class="text-sm text-gray-600">Priceline • Apr 2016 – May 2018 • New York, NY</p>
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li>Built a price sensitivity model, reducing vacancy by 14%.</li>
+            <li>Personalized recommendations increased bookings by 5%.</li>
+            <li>Implemented shopping cart ranking, boosting add-to-cart by 11%.</li>
+            <li>Saved 25 hours/month by automating rebooking suggestions.</li>
+          </ul>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="mt-4">
+          <h3 class="font-semibold text-xl">Data Scientist Intern</h3>
+          <p class="text-sm text-gray-600">Microsoft • Apr 2015 – Apr 2016 • New York, NY</p>
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li>Analyzed performance reviews across 150+ engineers.</li>
+            <li>Built model for success likelihood on Azure products.</li>
+            <li>Improved satisfaction model that reduced CS coaching time by 11%.</li>
+          </ul>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+</body>
+</html>
