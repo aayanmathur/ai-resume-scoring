@@ -28,36 +28,6 @@ def upload():
         return 'Upload processed in memory!'
     return 'No file uploaded!', 400
 
-@app.route("/manual-resume", methods=["GET"])
-def manual_resume():
-    return render_template("manual-form.html",data={})
-
-@app.route('/education-details')
-def education_details():
-    return render_template('edu-detail.html') 
-
-@app.route('/experience')
-def experience():
-    return render_template('experience.html')
-
-@app.route('/projects')
-def projects():
-    return render_template('projects.html')
-
-@app.route('/select_template', methods=['GET', 'POST'])
-def select_template():
-    if request.method == 'POST':
-        selected = request.form.get('selected_template')
-        return redirect(url_for('preview_pdf', template=selected))
-    return render_template('layouts.html')
-@app.route('/preview_pdf')
-def preview_pdf():
-    template = request.args.get('template')
-    return render_template('preview-pdf.html', template=template)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
 @app.route('/templates.html')
 def templates():
     return render_template('templates.html')
@@ -72,3 +42,5 @@ def build_resume():
     return render_template('build-resume.html')
 
 
+if __name__ == '__main__':
+    app.run(debug=True)
