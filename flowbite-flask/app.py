@@ -57,3 +57,18 @@ def preview_pdf():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/templates.html')
+def templates():
+    return render_template('templates.html')
+
+@app.route('/download.html')
+def download():
+    session_id = request.args.get('session')
+    return render_template('download.html', session=session_id)
+
+@app.route('/build-resume', methods=['GET'])
+def build_resume():
+    return render_template('build-resume.html')
+
+
