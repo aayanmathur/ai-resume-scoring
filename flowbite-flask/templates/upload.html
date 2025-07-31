@@ -665,34 +665,29 @@
       }, 2000);
     }
 
-    function checkATSScore() {
-      if (!currentFile) {
-        alert('Please upload a resume first.');
-        return;
-      }
-      
-      // Show loading state
-      const btn = event.target;
-      const originalText = btn.innerHTML;
-      btn.innerHTML = `
-        <svg class="animate-spin w-5 h-5 inline-block mr-2" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        Analyzing...
-      `;
-      btn.disabled = true;
-      
-      // Simulate ATS analysis time
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        
-        // TODO: Navigate to ATS score page with uploaded file
-        // For now, we'll show a success message
-        window.location.href = 'ats-score.html?file=' + encodeURIComponent(currentFile.name);
-      }, 3000);
+  function checkATSScore() {
+    if (!currentFile) {
+      alert('Please upload a resume first.');
+      return;
     }
+  
+    // Show loading state
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `
+      <svg class="animate-spin w-5 h-5 inline-block mr-2" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Analyzing...
+    `;
+    btn.disabled = true;
+  
+    // Navigate to ATS score page with file parameter
+    setTimeout(() => {
+      window.location.href = '/ats-score?file=' + encodeURIComponent(currentFile.name);
+    }, 1500);
+  }
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {

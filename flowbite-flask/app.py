@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 
 app = Flask(__name__)
@@ -41,6 +41,44 @@ def download():
 def build_resume():
     return render_template('build-resume.html')
 
+# New ATS Score route
+@app.route('/ats-score')
+def ats_score():
+    file_param = request.args.get('file')
+    enhanced_param = request.args.get('enhanced')
+    return render_template('ats-score.html', file=file_param, enhanced=enhanced_param)
+
+# API endpoint for ATS analysis (for future Gemini integration)
+@app.route('/api/analyze-ats', methods=['POST'])
+def analyze_ats():
+    try:
+        data = request.get_json()
+        file_name = data.get('fileName')
+        session_id = data.get('sessionId')
+        
+        # TODO: Implement Gemini LLM analysis here
+        # For now, return mock data
+        mock_results = {
+            'overallScore': 78,
+            'breakdown': [
+                {'category': 'Keywords Match', 'score': 82, 'description': 'Good keyword optimization'},
+                {'category': 'Format Compatibility', 'score': 90, 'description': 'Excellent ATS-friendly format'},
+                {'category': 'Section Organization', 'score': 75, 'description': 'Well-structured sections'},
+                {'category': 'Contact Information', 'score': 95, 'description': 'Complete contact details'},
+                {'category': 'Skills Alignment', 'score': 65, 'description': 'Some skills could be better highlighted'}
+            ],
+            'recommendations': [
+                'Add more industry-specific keywords in your experience section',
+                'Include quantifiable achievements with numbers and percentages',
+                'Ensure consistent formatting throughout the document',
+                'Add a skills section with relevant technical competencies'
+            ]
+        }
+        
+        return jsonify(mock_results)
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
