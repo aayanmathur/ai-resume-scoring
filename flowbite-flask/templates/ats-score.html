@@ -197,10 +197,42 @@
         gap: 1rem;
       }
     }
+
+    /* Debug console styles */
+    .debug-console {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 400px;
+      max-height: 300px;
+      background: rgba(0, 0, 0, 0.9);
+      color: #00ff00;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      overflow-y: auto;
+      z-index: 10000;
+      display: none;
+    }
+    
+    .debug-console.show {
+      display: block;
+    }
   </style>
 </head>
 
 <body class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-x-hidden">
+
+  <!-- Debug Console -->
+  <div class="debug-console" id="debugConsole">
+    <div style="color: #ff6600; font-weight: bold;">DEBUG CONSOLE</div>
+    <div id="debugOutput"></div>
+    <button onclick="toggleDebug()" style="position: absolute; top: 5px; right: 5px; background: #333; color: white; border: none; padding: 2px 6px; border-radius: 3px; cursor: pointer;">Hide</button>
+  </div>
+  
+  <!-- Debug Toggle Button -->
+  <button onclick="toggleDebug()" style="position: fixed; bottom: 20px; right: 20px; background: #333; color: white; border: none; padding: 10px; border-radius: 50%; cursor: pointer; z-index: 9999; font-size: 12px;">🐛</button>
 
   <!-- Analysis Loading Overlay -->
   <div class="analysis-overlay" id="analysisOverlay">
@@ -353,11 +385,30 @@
     let analysisComplete = false;
     let currentFile = null;
 
+    // Debug functions
+    function debugLog(message) {
+      console.log(message);
+      const debugOutput = document.getElementById('debugOutput');
+      if (debugOutput) {
+        debugOutput.innerHTML += '<div>' + new Date().toLocaleTimeString() + ': ' + message + '</div>';
+        debugOutput.scrollTop = debugOutput.scrollHeight;
+      }
+    }
+
+    function toggleDebug() {
+      const console = document.getElementById('debugConsole');
+      console.classList.toggle('show');
+    }
+
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
+      debugLog('Page loaded, initializing...');
+      
       const urlParams = new URLSearchParams(window.location.search);
       const fileName = urlParams.get('file');
       const enhanced = urlParams.get('enhanced');
+      
+      debugLog('URL params: fileName=' + fileName + ', enhanced=' + enhanced);
       
       if (fileName || enhanced) {
         // Hide upload prompt and start analysis
@@ -370,6 +421,7 @@
     document.getElementById('resumeFileInput').addEventListener('change', function(e) {
       if (e.target.files.length > 0) {
         currentFile = e.target.files[0];
+        debugLog('File selected: ' + currentFile.name);
         document.getElementById('uploadPrompt').classList.add('hidden');
         startAnalysis(currentFile.name);
       }
@@ -377,6 +429,8 @@
 
     // Start ATS analysis
     function startAnalysis(fileName) {
+      debugLog('Starting analysis for: ' + fileName);
+      
       const overlay = document.getElementById('analysisOverlay');
       overlay.classList.add('active');
       
@@ -386,49 +440,105 @@
       
       const interval = setInterval(() => {
         progress += Math.random() * 10;
-        if (progress >= 100) {
-          progress = 100;
+        if (progress >= 90) {
+          progress = 90;
           clearInterval(interval);
-          
-          setTimeout(() => {
-            overlay.classList.remove('active');
-            showAnalysisResults();
-          }, 1000);
         }
         progressBar.style.width = progress + '%';
       }, 300);
 
-      // In real implementation, this would call the backend API:
-      // analyzeResumeWithGemini(fileName);
+      // Call the actual backend API
+      analyzeResumeWithGemini(fileName)
+        .then(() => {
+          progressBar.style.width = '100%';
+          setTimeout(() => {
+            overlay.classList.remove('active');
+          }, 1000);
+        })
+        .catch(error => {
+          debugLog('Analysis failed: ' + error.message);
+          progressBar.style.width = '100%';
+          setTimeout(() => {
+            overlay.classList.remove('active');
+          }, 1000);
+        });
     }
 
-    // Show analysis results (mock data for now)
-    function showAnalysisResults() {
-      document.getElementById('analysisResults').classList.remove('hidden');
-      
-      // Mock data - replace with actual API response
-      const mockResults = {
-        overallScore: 78,
-        breakdown: [
-          { category: 'Keywords Match', score: 82, description: 'Good keyword optimization' },
-          { category: 'Format Compatibility', score: 90, description: 'Excellent ATS-friendly format' },
-          { category: 'Section Organization', score: 75, description: 'Well-structured sections' },
-          { category: 'Contact Information', score: 95, description: 'Complete contact details' },
-          { category: 'Skills Alignment', score: 65, description: 'Some skills could be better highlighted' }
-        ],
-        recommendations: [
-          'Add more industry-specific keywords in your experience section',
-          'Include quantifiable achievements with numbers and percentages',
-          'Ensure consistent formatting throughout the document',
-          'Add a skills section with relevant technical competencies'
-        ]
-      };
+    // Backend integration function - THIS IS THE CRITICAL PART
+    async function analyzeResumeWithGemini(fileName) {
+      try {
+        debugLog('Calling API with fileName: ' + fileName);
+        
+        const response = await fetch('/api/analyze-ats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            fileName: fileName,
+            sessionId: getSessionId()
+          })
+        });
+        
+        debugLog('API response status: ' + response.status);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          debugLog('API error response: ' + errorText);
+          throw new Error('API request failed: ' + response.status);
+        }
+        
+        const results = await response.json();
+        debugLog('API results: ' + JSON.stringify(results));
+        
+        if (results.error) {
+          debugLog('API returned error: ' + results.error);
+          throw new Error(results.error);
+        }
+        
+        // Check if this is mock data or real Gemini data
+        if (results.overallScore === 60 && results.breakdown.length === 0) {
+          debugLog('WARNING: Received fallback mock data from backend!');
+        } else {
+          debugLog('SUCCESS: Received real analysis data from Gemini!');
+        }
+        
+        displayResults(results);
+        
+      } catch (error) {
+        debugLog('CRITICAL ERROR: ' + error.message);
+        
+        // Show fallback mock data
+        const mockResults = {
+          overallScore: 78,
+          breakdown: [
+            { category: 'Keywords Match', score: 82, description: 'Good keyword optimization' },
+            { category: 'Format Compatibility', score: 90, description: 'Excellent ATS-friendly format' },
+            { category: 'Section Organization', score: 75, description: 'Well-structured sections' },
+            { category: 'Contact Information', score: 95, description: 'Complete contact details' },
+            { category: 'Skills Alignment', score: 65, description: 'Some skills could be better highlighted' }
+          ],
+          recommendations: [
+            'Add more industry-specific keywords in your experience section',
+            'Include quantifiable achievements with numbers and percentages',
+            'Ensure consistent formatting throughout the document',
+            'Add a skills section with relevant technical competencies'
+          ]
+        };
 
-      displayResults(mockResults);
+        debugLog('Using fallback mock data');
+        displayResults(mockResults);
+        throw error; // Re-throw to handle in calling function
+      }
     }
 
     // Display the analysis results
     function displayResults(results) {
+      debugLog('Displaying results with overall score: ' + results.overallScore);
+      
+      // Show results section
+      document.getElementById('analysisResults').classList.remove('hidden');
+      
       // Update overall score
       const scoreElement = document.getElementById('overallScore');
       const scoreCircle = document.getElementById('scoreCircle');
@@ -555,29 +665,6 @@
           toast.remove();
         }, 300);
       }, 3000);
-    }
-
-    // Backend integration function (to be implemented)
-    async function analyzeResumeWithGemini(fileName) {
-      try {
-        const response = await fetch('/api/analyze-ats', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            fileName: fileName,
-            sessionId: getSessionId()
-          })
-        });
-        
-        const results = await response.json();
-        displayResults(results);
-      } catch (error) {
-        console.error('Analysis failed:', error);
-        // Show error message and fallback to mock data
-        showAnalysisResults();
-      }
     }
 
     function getSessionId() {

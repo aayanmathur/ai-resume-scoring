@@ -406,38 +406,68 @@
       }
     });
 
-    // Handle file upload
     function handleFileUpload(file) {
-      // Validate file type
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!allowedTypes.includes(file.type)) {
-        showUploadError('Please upload a PDF, DOC, or DOCX file.');
-        return;
-      }
+    // Validate file type
+    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!allowedTypes.includes(file.type)) {
+      showUploadError('Please upload a PDF, DOC, or DOCX file.');
+      return;
+    }
 
-      // Validate file size (10MB max)
-      if (file.size > 10 * 1024 * 1024) {
-        showUploadError('File size must be less than 10MB.');
-        return;
-      }
+    // Validate file size (10MB max)
+    if (file.size > 10 * 1024 * 1024) {
+      showUploadError('File size must be less than 10MB.');
+      return;
+    }
 
-      currentFile = file;
-      showUploadProgress();
+    currentFile = file;
+    
+    // Actually upload the file to server
+    uploadFileToServer(file);
+  
+  
+  }
+  function uploadFileToServer(file) {
+    showUploadProgress();
+    
+    const formData = new FormData();
+    formData.append('resume', file);
+    
+    fetch('/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Update currentFile object with the secured filename
+      currentFile.savedName = data.filename;
       
       // Display file info
       displayFileInfo(file);
-
-      // Process file based on type
+      
+      // Process file based on type for preview
       if (file.type === 'application/pdf') {
         processPDF(file);
       } else {
-        // For DOC/DOCX files, show a message that preview is not available
         showDocPreview();
       }
-    }
+      
+      showUploadSuccess();
+    })
+    .catch(error => {
+      console.error('Upload error:', error);
+      showUploadError('Upload failed. Please try again.');
+    });
+  }
 
-    // Show upload progress
-    function showUploadProgress() {
+
+  // Show upload progress
+  function showUploadProgress() {
       const progressContainer = document.getElementById('uploadProgress');
       const progressBar = document.getElementById('uploadProgressBar');
       
@@ -457,10 +487,10 @@
         }
         progressBar.style.width = progress + '%';
       }, 200);
-    }
+  }
 
-    // Show upload success
-    function showUploadSuccess() {
+  // Show upload success
+  function showUploadSuccess() {
       uploadZone.classList.add('upload-success');
       document.getElementById('actionButtons').classList.remove('hidden');
       
@@ -468,10 +498,10 @@
       status.classList.remove('hidden');
       status.querySelector('p').textContent = 'File uploaded successfully!';
       status.querySelector('p').className = 'text-sm text-green-600';
-    }
+  }
 
-    // Show upload error
-    function showUploadError(message) {
+  // Show upload error
+  function showUploadError(message) {
       uploadZone.classList.add('upload-error');
       
       const status = document.getElementById('uploadStatus');
@@ -483,10 +513,10 @@
         uploadZone.classList.remove('upload-error');
         status.classList.add('hidden');
       }, 3000);
-    }
+  }
 
-    // Display file information
-    function displayFileInfo(file) {
+  // Display file information
+  function displayFileInfo(file) {
       const fileInfo = document.getElementById('fileInfo');
       const fileName = document.getElementById('fileName');
       const fileSize = document.getElementById('fileSize');
@@ -494,16 +524,16 @@
       fileName.textContent = file.name;
       fileSize.textContent = formatFileSize(file.size);
       fileInfo.classList.remove('hidden');
-    }
+  }
 
-    // Format file size
-    function formatFileSize(bytes) {
+  // Format file size
+  function formatFileSize(bytes) {
       if (bytes === 0) return '0 Bytes';
       const k = 1024;
       const sizes = ['Bytes', 'KB', 'MB', 'GB'];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
+  }
 
     // Process PDF file
     function processPDF(file) {
@@ -670,8 +700,7 @@
       alert('Please upload a resume first.');
       return;
     }
-  
-    // Show loading state
+
     const btn = event.target;
     const originalText = btn.innerHTML;
     btn.innerHTML = `
@@ -682,10 +711,12 @@
       Analyzing...
     `;
     btn.disabled = true;
-  
-    // Navigate to ATS score page with file parameter
+
+    // Use the secured filename that was actually saved
+    const fileNameToUse = currentFile.savedName || currentFile.name;
+    
     setTimeout(() => {
-      window.location.href = '/ats-score?file=' + encodeURIComponent(currentFile.name);
+      window.location.href = '/ats-score?file=' + encodeURIComponent(fileNameToUse);
     }, 1500);
   }
 
