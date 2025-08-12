@@ -8,7 +8,7 @@
 
 ## What It Does
 
-This AI-powered platform helps job seekers optimize their resumes for Applicant Tracking Systems (ATS) using Google's Gemini LLM. Users can upload existing resumes or build new ones from scratch, receiving instant AI-driven feedback and professional template transformations.
+This AI-powered platform helps job seekers optimize their resumes for Applicant Tracking Systems (ATS) using Google's Gemini LLM. Users can upload resumes and receive instant AI-driven feedback. 
 
 
 ---
