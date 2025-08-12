@@ -2,7 +2,7 @@
 
 *Intelligent ATS-compliant resume analysis using Google Gemini AI*
 
-## 🚀 [Live Demo](your-render-deployment-url-here) 
+## 🚀 [Live Demo](https://ai-resume-scoring.onrender.com) 
 
 ---
 
