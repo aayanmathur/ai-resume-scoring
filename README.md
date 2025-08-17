@@ -1,6 +1,6 @@
 # AI Resume Scoring Platform
 
-*Intelligent ATS-compliant resume analysis using Google Gemini AI*
+*ATS-compliant resume analysis using Google Gemini AI*
 
 ## 🚀 [Live Demo](https://ai-resume-scoring.onrender.com) 
 
